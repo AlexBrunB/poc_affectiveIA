@@ -10,7 +10,7 @@
 
 import requests
 requests.packages.urllib3.disable_warnings()
-
+import json
 
 """
 Méthode pour call l'API Beyond Verbal et soumettre un extrait sonore à étude.
@@ -33,5 +33,5 @@ def getAnalysis(API_Key,WavPath):
         return r.json()
 
 
-json = getAnalysis("API_Key","WavPath")
-print(json)
+data = getAnalysis("API_Key","WavPath")
+print(json.dumps(data, sort_keys=True, indent=4))
