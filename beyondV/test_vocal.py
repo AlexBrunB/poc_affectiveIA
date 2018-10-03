@@ -10,7 +10,7 @@
 
 import requests
 requests.packages.urllib3.disable_warnings()
-import json
+
 
 """
 Méthode pour call l'API Beyond Verbal et soumettre un extrait sonore à étude.
@@ -24,16 +24,14 @@ def getAnalysis(API_Key,WavPath):
     headers={"Authorization":"Bearer "+token}
 
     pp = requests.post("https://apiv4.beyondverbal.com/v4/recording/start",json={"dataFormat": { "type":"WAV" }},verify=False,headers=headers)
-    
     if pp.status_code != 200:
         print(pp.status_code, pp.content)
         return
-    
     recordingId = pp.json()['recordingId']
     with open(WavPath,'rb') as wavdata:
         r = requests.post("https://apiv4.beyondverbal.com/v4/recording/"+recordingId,data=wavdata, verify=False, headers=headers)
         return r.json()
 
-data = getAnalysis("755df2e5-10d6-41d1-8f12-3e1b34325261","samples/1.wav")
-print(json.dumps(data, sort_keys= True, indent=4))
 
+json = getAnalysis("API_Key","WavPath")
+print(json)
